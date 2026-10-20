@@ -6,6 +6,8 @@ Topaz Gigapixel worked fine, then one day macOS says:
 
 Clicking **Open Anyway** in System Settings › Privacy & Security doesn't help: the app never shows up. This fix gets it running again in a minute, keeps your downloaded models (13 GB here), and needs no installer.
 
+> **Setup where this happened:** Gigapixel installed on an **external SSD** (`/Volumes/<Drive>/Applications`) to save space on the internal disk. That is not the recommended setup: the installer targets `/Applications` on the internal disk. An external volume gets unmounted, remounted or restored, and each time macOS may drop its cached signature check, which is what triggers the "damaged" error below. An install on the internal disk can hit the same broken seal (e.g. after a macOS update), but less often.
+
 ## Why it happens
 
 1. **Gigapixel writes its downloaded AI models inside its own app bundle** (`Contents/Resources/models/`) and also modifies `Contents/Resources/lrtemplates/external editor.lrtemplate`. Any change inside a signed bundle breaks its code seal:
@@ -90,7 +92,7 @@ The original's seal is still broken after that, so you need the `codesign --forc
 
 - Topaz Gigapixel AI 8.4.4
 - macOS 27.0.1, Apple Silicon (M4 Pro)
-- App installed on an external APFS SSD
+- App installed on an external APFS SSD (not the default `/Applications`)
 
 The cause (an app writing into its own bundle) and the fix (clone + ad hoc re-sign) aren't specific to Gigapixel: `fix-damaged-app.sh` takes any app path.
 
