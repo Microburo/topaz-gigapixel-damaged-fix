@@ -1,4 +1,4 @@
-# Topaz Gigapixel "is damaged and can't be opened" on macOS — fix without reinstalling
+# Topaz Gigapixel on an external drive "is damaged and can't be opened" on macOS — fix without reinstalling
 
 Topaz Gigapixel worked fine, then one day macOS says:
 
